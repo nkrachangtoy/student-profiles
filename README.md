@@ -2,21 +2,21 @@
 
 ### Built with
 
-- [React]("https://reactjs.org/")
+- [React](https://reactjs.org/)
 
 ### Installation and Setup Instructions
 
 Installation:
 
-    npm install`
+    npm install
 
 To Start Server:
 
-    `npm start`
+    npm start
 
 To Visit App:
 
-    `localhost:3000`
+    localhost:3000
 
 ### Packages used
 
