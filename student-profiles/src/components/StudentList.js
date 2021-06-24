@@ -5,6 +5,8 @@ const BASE_URL = "https://api.hatchways.io/assessment/students";
 
 export default function StudentList() {
     const [students, setStudents] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
     
     // Get student profiles
     async function getStudentProfiles(){
@@ -17,19 +19,50 @@ export default function StudentList() {
         }
     }
 
-    useEffect(()=>{
-       getStudentProfiles();
-    },[])
-
-    function handleAverageGrade(grades){
+    // Calculate student's average grade
+    const handleAverageGrade = (grades) => {
         const toNumber = grades.map(i => Number(i));
         const sum = toNumber.reduce((a, b) => a + b);
         const avg = sum / toNumber.length;
         return avg;
     }
+
+    // Search by name
+    const handleSearchByName = (arr = [], val="") => {
+        const results = arr.filter(({ firstName = "", lastName = "" }) =>
+        [firstName, lastName, `${firstName} ${lastName}`].some(el =>
+        el.toLowerCase().includes(val.toLowerCase())
+        )
+     );
+     return results;
+    }
+
+    const SearchByName = (e) => {
+        const input = e.target.value;
+        setSearchTerm(input);
+        const results = students.filter(({firstName = "", lastName = ""}) => [firstName, lastName,  `${firstName} ${lastName}`].some(el=> el.toLowerCase().includes(input.toLowerCase())));
+        if(input != ""){
+            setSearchResults(results);
+        }else{
+            setSearchResults(students)
+        }
+    }
+
+
+    useEffect(()=>{       
+        getStudentProfiles();
+     },[])
+
     return (
         <div className="student-list-container">
-            {students.map(student => 
+            <input 
+                type="text"
+                placeholder="Search by name"
+                value={searchTerm}
+                // onChange={(searchTerm)=>handleSearchByName(students, val=`${searchTerm}`)}
+                onChange={SearchByName}
+                />
+            {searchResults.map(student => 
                 <div className="student-list__item" key={student.id}>
                     <div style={{backgroundImage: `url(${student.pic})`}} className="student-list__img" />
                     <div className="student-list__info">
