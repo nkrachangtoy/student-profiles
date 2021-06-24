@@ -6,6 +6,7 @@
   border-radius: 1rem;
   overflow-x: hidden;
   overflow-y: scroll;
+  // Hide scroll bar
   &::-webkit-scrollbar {
     display: none;
   }
@@ -18,8 +19,8 @@
     border-bottom: 1px solid $border-color;
   }
   &__img {
-    height: 6rem;
-    width: 6rem;
+    height: 7rem;
+    width: 7rem;
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100%;
@@ -36,11 +37,12 @@
     text-transform: uppercase;
     font-size: 2.3rem;
     margin: 0;
+    margin-bottom: 0.5rem;
   }
 
   &__text {
     margin: 0 0 0.3rem 1rem;
     font-size: 0.75rem;
-    color: #707070;
+    color: $secondary-text;
   }
 }

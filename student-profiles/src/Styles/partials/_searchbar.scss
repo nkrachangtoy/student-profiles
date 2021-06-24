@@ -1,0 +1,14 @@
+.search-bar {
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  width: calc(100% - 1rem);
+  margin-left: 0.5rem;
+  outline: none;
+  border: none;
+  font-size: 1.2rem;
+  color: $secondary-text;
+  border-bottom: 2px solid $border-color;
+  &:focus {
+    transition: border-bottom ease-in-out 0.3s;
+    border-bottom: 2px solid $dark-border-color;
+  }
+}

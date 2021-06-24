@@ -62,8 +62,8 @@ li {
 }
 
 .student-list__img {
-  height: 6rem;
-  width: 6rem;
+  height: 7rem;
+  width: 7rem;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -80,11 +80,29 @@ li {
   text-transform: uppercase;
   font-size: 2.3rem;
   margin: 0;
+  margin-bottom: 0.5rem;
 }
 
 .student-list__text {
   margin: 0 0 0.3rem 1rem;
   font-size: 0.75rem;
   color: #707070;
+}
+
+.search-bar {
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  width: calc(100% - 1rem);
+  margin-left: 0.5rem;
+  outline: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #707070;
+  border-bottom: 2px solid #dfdfdf;
+}
+
+.search-bar:focus {
+  -webkit-transition: border-bottom ease-in-out 0.3s;
+  transition: border-bottom ease-in-out 0.3s;
+  border-bottom: 2px solid #323232;
 }
 /*# sourceMappingURL=main.css.map */
