@@ -19,6 +19,8 @@ export default function StudentList() {
         }
     }
 
+
+
     // Calculate student's average grade
     const handleAverageGrade = (grades) => {
         const toNumber = grades.map(i => Number(i));
@@ -28,30 +30,16 @@ export default function StudentList() {
     }
 
     // Search by name
-    const handleSearchByName = (arr = [], val="") => {
-        const results = arr.filter(({ firstName = "", lastName = "" }) =>
-        [firstName, lastName, `${firstName} ${lastName}`].some(el =>
-        el.toLowerCase().includes(val.toLowerCase())
-        )
-     );
-     return results;
-    }
-
-    const SearchByName = (e) => {
+    const searchByName = (e) => {
         const input = e.target.value;
         setSearchTerm(input);
         const results = students.filter(({firstName = "", lastName = ""}) => [firstName, lastName,  `${firstName} ${lastName}`].some(el=> el.toLowerCase().includes(input.toLowerCase())));
-        if(input != ""){
-            setSearchResults(results);
-        }else{
-            setSearchResults(students)
-        }
+        setSearchResults(results);
     }
 
-
-    useEffect(()=>{       
+    useEffect(()=>{      
         getStudentProfiles();
-     },[])
+     },[searchTerm]);
 
     return (
         <div className="student-list-container">
@@ -59,10 +47,20 @@ export default function StudentList() {
                 type="text"
                 placeholder="Search by name"
                 value={searchTerm}
-                // onChange={(searchTerm)=>handleSearchByName(students, val=`${searchTerm}`)}
-                onChange={SearchByName}
+                onChange={searchByName}
+                className="search-bar"
                 />
-            {searchResults.map(student => 
+            {searchTerm !== "" ? searchResults.map(student => 
+                <div className="student-list__item" key={student.id}>
+                    <div style={{backgroundImage: `url(${student.pic})`}} className="student-list__img" />
+                    <div className="student-list__info">
+                    <h1 className="student-list__name">{`${student.firstName} ${student.lastName}`}</h1>
+                        <p className="student-list__text">Email: {student.email}</p>
+                        <p className="student-list__text">Company: {student.company}</p>
+                        <p className="student-list__text">Skill: {student.skill}</p>
+                        <p className="student-list__text">Average: {handleAverageGrade(student.grades)}%</p>
+                    </div>
+                </div>) : students.map(student => 
                 <div className="student-list__item" key={student.id}>
                     <div style={{backgroundImage: `url(${student.pic})`}} className="student-list__img" />
                     <div className="student-list__info">
