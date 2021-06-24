@@ -1,1 +1,90 @@
-/* No CSS *//*# sourceMappingURL=main.css.map */
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap");
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #f2f2f2;
+  color: black;
+  font-family: "Raleway", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+}
+
+.student-list-container {
+  background-color: white;
+  -webkit-box-shadow: 6px 6px 2px -4px rgba(0, 0, 0, 0.45);
+          box-shadow: 6px 6px 2px -4px rgba(0, 0, 0, 0.45);
+  width: 55rem;
+  max-height: 35rem;
+  border-radius: 1rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.student-list-container::-webkit-scrollbar {
+  display: none;
+}
+
+.student-list__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.student-list__img {
+  height: 6rem;
+  width: 6rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid #dfdfdf;
+}
+
+.student-list__info {
+  margin-left: 2rem;
+}
+
+.student-list__name {
+  text-transform: uppercase;
+  font-size: 2.3rem;
+  margin: 0;
+}
+
+.student-list__text {
+  margin: 0 0 0.3rem 1rem;
+  font-size: 0.75rem;
+  color: #707070;
+}
+/*# sourceMappingURL=main.css.map */

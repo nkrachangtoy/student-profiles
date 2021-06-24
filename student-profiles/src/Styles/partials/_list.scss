@@ -1,0 +1,46 @@
+.student-list-container {
+  background-color: white;
+  box-shadow: 6px 6px 2px -4px rgba(0, 0, 0, 0.45);
+  width: 55rem;
+  max-height: 35rem;
+  border-radius: 1rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.student-list {
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid $border-color;
+  }
+  &__img {
+    height: 6rem;
+    width: 6rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid $border-color;
+  }
+
+  &__info {
+    margin-left: 2rem;
+  }
+
+  &__name {
+    text-transform: uppercase;
+    font-size: 2.3rem;
+    margin: 0;
+  }
+
+  &__text {
+    margin: 0 0 0.3rem 1rem;
+    font-size: 0.75rem;
+    color: #707070;
+  }
+}
