@@ -9,6 +9,6 @@
   border-bottom: 2px solid $border-color;
   &:focus {
     transition: border-bottom ease-in-out 0.3s;
-    border-bottom: 2px solid $dark-border-color;
+    border-bottom: 2px solid $primary-color;
   }
 }

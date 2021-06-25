@@ -76,6 +76,13 @@ li {
 .student-list__info {
   margin-left: 2rem;
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .student-list__header-container {
@@ -105,7 +112,7 @@ li {
 .student-list__text {
   margin: 0 0 0.3rem 1rem;
   font-size: 0.75rem;
-  color: #707070;
+  color: #323232;
 }
 
 .student-list__text--grade {
@@ -139,5 +146,35 @@ li {
   -webkit-transition: border-bottom ease-in-out 0.3s;
   transition: border-bottom ease-in-out 0.3s;
   border-bottom: 2px solid #323232;
+}
+
+.input-tag {
+  outline: none;
+  border: none;
+  font-size: 0.75rem;
+  color: #707070;
+  border-bottom: 2px solid #dfdfdf;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  padding-bottom: 8px;
+  width: 150px;
+}
+
+.input-tag:focus {
+  -webkit-transition: border-bottom ease-in-out 0.3s;
+  transition: border-bottom ease-in-out 0.3s;
+  border-bottom: 2px solid #323232;
+}
+
+.tags {
+  margin: 1rem;
+}
+
+.tag {
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+  background-color: #d6d6d6;
+  padding: 0.5rem;
+  border-radius: 4px;
 }
 /*# sourceMappingURL=main.css.map */

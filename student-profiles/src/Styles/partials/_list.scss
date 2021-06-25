@@ -33,6 +33,8 @@
   &__info {
     margin-left: 2rem;
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   &__header-container {
@@ -56,7 +58,7 @@
   &__text {
     margin: 0 0 0.3rem 1rem;
     font-size: 0.75rem;
-    color: $secondary-text;
+    color: $primary-color;
     &--grade {
       word-spacing: 1rem;
     }
@@ -70,7 +72,7 @@
     cursor: pointer;
     &:hover,
     &:active {
-      color: #323232;
+      color: $primary-color;
     }
   }
 }
