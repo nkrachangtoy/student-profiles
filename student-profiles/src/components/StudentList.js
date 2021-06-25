@@ -7,6 +7,7 @@ export default function StudentList() {
     const [students, setStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [isActive, setIsActive] = useState(false);
     
     // Get student profiles
     async function getStudentProfiles(){
@@ -18,8 +19,6 @@ export default function StudentList() {
             console.log(e)
         }
     }
-
-
 
     // Calculate student's average grade
     const handleAverageGrade = (grades) => {
@@ -37,6 +36,14 @@ export default function StudentList() {
         setSearchResults(results);
     }
 
+    const toggleAccordion = (index) => {
+        if(isActive === index){
+            // if it's already active, then close it
+            return setIsActive(null);
+        }
+        setIsActive(index);
+    }
+
     useEffect(()=>{      
         getStudentProfiles();
      },[searchTerm]);
@@ -50,25 +57,42 @@ export default function StudentList() {
                 onChange={searchByName}
                 className="search-bar"
                 />
-            {searchTerm !== "" ? searchResults.map(student => 
+            {searchTerm !== "" 
+            ? 
+            searchResults.map(student => 
                 <div className="student-list__item" key={student.id}>
                     <div style={{backgroundImage: `url(${student.pic})`}} className="student-list__img" />
                     <div className="student-list__info">
-                    <h1 className="student-list__name">{`${student.firstName} ${student.lastName}`}</h1>
+                        <div className="student-list__header-container">
+                            <h1 className="student-list__header">{`${student.firstName} ${student.lastName}`}</h1>
+                            <div onClick={()=>toggleAccordion(student.id)} key={student.id}>
+                                <span className="student-list__icon">{isActive === student.id ? '-' : '+'}</span>
+                            </div>
+                        </div>
                         <p className="student-list__text">Email: {student.email}</p>
                         <p className="student-list__text">Company: {student.company}</p>
                         <p className="student-list__text">Skill: {student.skill}</p>
                         <p className="student-list__text">Average: {handleAverageGrade(student.grades)}%</p>
+                        {isActive === student.id && <div key={student.id}>{student.grades.map((grade, index) => <p className="student-list__text student-list__text--grade">Test{index + 1}: {grade}%</p>)}</div>}
                     </div>
-                </div>) : students.map(student => 
+                </div>
+                )
+            : 
+                students.map(student => 
                 <div className="student-list__item" key={student.id}>
                     <div style={{backgroundImage: `url(${student.pic})`}} className="student-list__img" />
                     <div className="student-list__info">
-                    <h1 className="student-list__name">{`${student.firstName} ${student.lastName}`}</h1>
+                        <div className="student-list__header-container">
+                            <h1 className="student-list__header">{`${student.firstName} ${student.lastName}`}</h1>
+                            <div onClick={()=>toggleAccordion(student.id)} key={student.id}>
+                                <span className="student-list__icon">{isActive === student.id ? '-' : '+'}</span>
+                            </div>
+                        </div>
                         <p className="student-list__text">Email: {student.email}</p>
                         <p className="student-list__text">Company: {student.company}</p>
                         <p className="student-list__text">Skill: {student.skill}</p>
                         <p className="student-list__text">Average: {handleAverageGrade(student.grades)}%</p>
+                        {isActive === student.id && <div key={student.id}>{student.grades.map((grade, index) => <p className="student-list__text student-list__text--grade">Test{index + 1}: {grade}%</p>)}</div>}
                     </div>
                 </div>
                 )}

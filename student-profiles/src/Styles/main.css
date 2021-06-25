@@ -51,12 +51,13 @@ li {
 }
 
 .student-list__item {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   padding: 1rem;
   border-bottom: 1px solid #dfdfdf;
 }
@@ -74,19 +75,53 @@ li {
 
 .student-list__info {
   margin-left: 2rem;
+  width: 100%;
 }
 
-.student-list__name {
+.student-list__header-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.student-list__accordion-sign {
+  font-weight: bold;
+  margin: 0;
+}
+
+.student-list__header {
   text-transform: uppercase;
-  font-size: 2.3rem;
   margin: 0;
   margin-bottom: 0.5rem;
+  font-size: 2.5rem;
 }
 
 .student-list__text {
   margin: 0 0 0.3rem 1rem;
   font-size: 0.75rem;
   color: #707070;
+}
+
+.student-list__text--grade {
+  word-spacing: 1rem;
+}
+
+.student-list__icon {
+  text-align: center;
+  font-size: 3rem;
+  color: #707070;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.student-list__icon:hover, .student-list__icon:active {
+  color: #323232;
 }
 
 .search-bar {
