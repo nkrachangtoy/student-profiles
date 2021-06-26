@@ -1,4 +1,5 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
+import App from '../App';
 import {getStudentProfiles} from '../api/studentsAPI';
 
 export default function controller () {
@@ -86,4 +87,20 @@ export default function controller () {
         getStudentProfiles();
      },[searchTerm, searchTag]);
 
+     return (
+        <App 
+            handleGetAllStudents={handleGetAllStudents}
+            handleAverageGrade={handleAverageGrade}
+            searchByName={searchByName}
+            searchByTag={searchByTag}
+            addTag={addTag}
+            toggleAccordion={toggleAccordion}
+            students={students}
+            isActive={isActive}
+            tags={tags}
+            searchResults={searchResults}
+            searchTerm={searchTerm}
+            searchTag={searchTag}
+        />
+     )
 }
