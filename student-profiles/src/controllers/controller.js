@@ -1,26 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import Student from './Student';
-import axios from "axios";
-const BASE_URL = "https://api.hatchways.io/assessment/students";
+import {useState, useEffect} from 'react';
+import {getStudentProfiles} from '../api/studentsAPI';
 
-
-export default function StudentList() {
+export default function controller () {
     const [students, setStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchTag, setSearchTag] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [isActive, setIsActive] = useState(false);
     const [tags, setTags] = useState([]);
-    
-    // Get student profiles
-    async function getStudentProfiles(){
-        try {
-            const response = await axios.get(`${BASE_URL}`);
-            setStudents(response.data.students);
-            return response;
-        } catch (e) {
-            console.log(e)
-        }
+
+    // Handle Fetch students
+    const handleGetAllStudents = async () => {
+        const results = await getStudentProfiles();
+        setStudents(results);
     }
 
     // Calculate student's average grade
@@ -58,13 +50,6 @@ export default function StudentList() {
             // setSearchResults(...searchResults, studentArr);
         }     
     }
-
-    // Search by Name and Tag
-    // const searchNameAndTag = ({searchTerm}) => {
-    //     const name = searchTerm.name;
-    //     const tag = searchTerm.tag;
-    // }
-
     // Add tag to student's profile
     const addTag = (studentId, e) => {
         let input = e.target.value;
@@ -87,7 +72,7 @@ export default function StudentList() {
             // })
         }
     }
-    
+
     // Toggle Accordion
     const toggleAccordion = (index) => {
         if(isActive === index){
@@ -101,46 +86,4 @@ export default function StudentList() {
         getStudentProfiles();
      },[searchTerm, searchTag]);
 
-    return (
-        <div className="student-list-container">
-            <input 
-                type="text"
-                placeholder="Search by name"
-                value={searchTerm}
-                onChange={searchByName}
-                className="search-bar"
-                />
-            <input 
-                type="text"
-                placeholder="Search by tag"
-                value={searchTag}
-                onChange={searchByTag}
-                className="search-bar"
-                />
-            {searchTerm !== "" ? 
-            searchResults.map((student, index) => 
-                <Student 
-                    toggleAccordion={toggleAccordion}
-                    handleAverageGrade={handleAverageGrade}
-                    addTag={addTag}
-                    isActive={isActive}
-                    student={student} 
-                    index={index}
-                    tags={tags}
-                />
-            ):
-            students.map((student, index) => 
-                <Student 
-                    toggleAccordion={toggleAccordion}
-                    handleAverageGrade={handleAverageGrade}
-                    addTag={addTag}
-                    isActive={isActive}
-                    student={student} 
-                    index={index}
-                    tags={tags}
-                />
-            )}
-        </div>
-    )
 }
-
