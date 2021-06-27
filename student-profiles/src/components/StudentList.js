@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react';
 import SearchBar from './SearchBar';
 import Student from './Student';
 import { getStudentProfiles } from '../api/studentsAPI';
+import {handleAverageGrade} from '../utils/utils';
 
 function StudentList() {
     const [students, setStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState({name: "", tag: ""});
-    const [searchResults, setSearchResults] = useState([]);
+    const [sortedStudents, setSortedStudents] = useState([]);
     const [isActive, setIsActive] = useState(false);
     const [tags, setTags] = useState([]);
     
@@ -16,87 +17,32 @@ function StudentList() {
         setStudents(results.data.students);
     }
 
-    // Calculate student's average grade
-    const handleAverageGrade = (grades) => {
-        const toNumber = grades.map(i => Number(i));
-        const sum = toNumber.reduce((a, b) => a + b);
-        const avg = sum / toNumber.length;
-        return avg;
+    // handle name search
+    const handleSearchByName = (input) => {
+        const results = students.filter(({firstName = "", lastName = ""}) => [firstName, lastName,  `${firstName} ${lastName}`].some(el => el.toLowerCase().includes(input.toLowerCase())));
+        return results;
     }
 
-    // Handle search input
-    const handleSearchInput = (e) => {
-        const value = e.target.value;
-        setSearchTerm({
-            ...searchTerm,
-            [e.target.name]: value
-        });
-    }
-
-
-    // Search by name
-    // const searchByName = (e) => {
-    //     const input = e.target.value;
-    //     setSearchTerm(input);
-    //     if(searchTerm !== "" || searchTerm !== null){
-    //         const results = students.filter(({firstName = "", lastName = ""}) => [firstName, lastName,  `${firstName} ${lastName}`].some(el=> el.toLowerCase().includes(input.toLowerCase())));
-    //         setSearchResults(results);
-    //     }
-    // }
-
-    // Search by tag
-    // const searchByTag = (e) => {
-    //     const input = e.target.value;
-    //     setSearchTag(input);
-    //     if(searchTag !== "" && searchTerm == ""){
-    //         // Filter out tag
-    //         const findTags = tags.filter(({tag = ""}) => [tag, `${tag}`].some(el => el.includes(input)));
-    //         // Compare student id in findTags to student id in students array
-    //         let studentArr = [];
-    //         students.filter(student => {
-    //         findTags.map(tag => {
-    //             if(tag.id === student.id){
-    //                 studentArr.push(student);
-    //             }})
-    //             });
-    //         setSearchResults(studentArr);
-    //         // setSearchResults(...searchResults, studentArr);
-    //     }     
-    // }
-
-    // const handleSearchResults = (e) => {
-    //     const value = e.target.value;
-    //     setSearchTerm({
-    //         ...searchTerm,
-    //         [e.target.name]: value
-    //     });
-
-    //     // Search by name
-    //     const results = students.filter(({firstName = "", lastName = ""}) => [firstName, lastName,  `${firstName} ${lastName}`].some(el=> el.toLowerCase().includes(searchTerm.name.toLowerCase())));
-    //     console.log('Search by Name results: ',results);
-    //     // setSearchResults(results);
-
-    //     // Search by tag
-    //     const findTags = tags.filter(({tag = ""}) => [tag, `${tag}`].some(el => el.includes(searchTerm.tag)));
-    //     // Compare student id in findTags to student id in students array
-    //     let studentArr = [];
-    //     students.filter(student => {
-    //     findTags.map(tag => {
-    //         if(tag.id === student.id){
-    //             studentArr.push(student);
-    //         }})
-    //         });
-    //     console.log('Search by Tag results: ', studentArr);
-    //     // setSearchResults(studentArr);
-    // }
-
-    // console.log('Search Results: ', searchResults);
-
-    // Add tag to student's profile
-    const addTag = (studentId, tag) => {
-        setTags([...tags, {id: studentId, tag: tag}]);
-    }
-    
+    // handle tag search
+    const handleSearchByTag = (input) => {
+        let studentArr = [];
+        const filteredTags = tags.filter(({tag = ""}) => [tag, `${tag}`].some(el => el.includes(input)));
+        // Compare student id in findTags to student id in students array
+        if(input !== ""){
+            students.filter(student => {
+                filteredTags.map(tag => {
+                        if(tag.id === student.id){
+                            studentArr.push(student);
+                        }})
+                    });
+            return studentArr;
+        }else{
+            students.map(student => studentArr.push(student))
+            return studentArr;
+        }
+        
+    } 
+            
     // Toggle Accordion
     const toggleAccordion = (index) => {
         if(isActive === index){
@@ -109,56 +55,36 @@ function StudentList() {
 
     useEffect(()=>{      
        handleGetAllStudents();
-     },[searchTerm]);
+     },[]);
+
+    useEffect(() => {
+        const nameResult = handleSearchByName(searchTerm.name);
+        const tagResult = handleSearchByTag(searchTerm.tag);
+        // Compare two arrays and filter out common object(s)
+        const result = nameResult.filter(obj1 => tagResult.some(obj2 => obj1.id === obj2.id));
+        setSortedStudents(result);
+    }, [students, searchTerm])
+
 
     return (
         <div className="student-list-container">
-            <SearchBar 
-                placeHolder="Seach by name"
-                inputName="name"
-                value={searchTerm.name}
-                handleSearchInput={handleSearchInput}
+            <SearchBar
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
             />
-            <SearchBar 
-                placeHolder="Seach by tag"
-                inputName="tag"
-                value={searchTerm.tag}
-                handleSearchInput={handleSearchInput}
-            />
-            {/* {searchTerm.name !== "" ? 
-            searchResults.map((student, index) => 
+            {sortedStudents.length > 0 ? 
+            sortedStudents.map((student, index) => 
                 <Student 
                     toggleAccordion={toggleAccordion}
                     handleAverageGrade={handleAverageGrade}
-                    addTag={addTag}
                     isActive={isActive}
                     student={student} 
                     index={index}
                     tags={tags}
+                    setTags={setTags}
                 />
-            ) : 
-            students.map((student, index) => 
-                <Student 
-                    toggleAccordion={toggleAccordion}
-                    handleAverageGrade={handleAverageGrade}
-                    addTag={addTag}
-                    isActive={isActive}
-                    student={student} 
-                    index={index}
-                    tags={tags}
-                />
-            )} */}
-            {students.map((student, index) => 
-                <Student 
-                    toggleAccordion={toggleAccordion}
-                    handleAverageGrade={handleAverageGrade}
-                    addTag={addTag}
-                    isActive={isActive}
-                    student={student} 
-                    index={index}
-                    tags={tags}
-                />
-            )}
+            ): <div>No Result Found</div>
+            }
         </div>
 
     )

@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
 
-function Tags({tags, studentId, addTag}) {
+function Tags({tags, studentId, setTags}) {
     const [tag, setTag] = useState("");
 
     const handleSubmit = (e) => {
         if(e.key === 'Enter'){
             e.preventDefault();
-            addTag(studentId, tag);
+            if(tag.trim().length === 0){
+                alert("Tag can't be empty");
+            }else{
+                setTags([...tags, {id: studentId, tag: tag}]);
+            }
             setTag("");
         }
     }
@@ -14,6 +18,7 @@ function Tags({tags, studentId, addTag}) {
     const handleChange = (e) => {
         setTag(e.target.value);
     }
+
     return (
         <>
             {tags.filter(t => t.id === studentId).length > 0 ? 

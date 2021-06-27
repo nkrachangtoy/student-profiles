@@ -2,7 +2,7 @@ import React from 'react';
 import Grades from './Grades';
 import Tags from './Tags';
 
-function student({student, index, toggleAccordion, handleAverageGrade, isActive, addTag, tags}) {
+function student({student, index, toggleAccordion, handleAverageGrade, isActive, tags, setTags}) {
     return (
         <div className="student-list__item" key={index}>
                 <div style={{backgroundImage: `url(${student.pic})`}} className="student-list__img" />
@@ -25,7 +25,7 @@ function student({student, index, toggleAccordion, handleAverageGrade, isActive,
                     <Tags 
                         tags={tags}
                         studentId={student.id}
-                        addTag={addTag}
+                        setTags={setTags}
                         />
                 </div>
             </div>
