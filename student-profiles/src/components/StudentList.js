@@ -33,11 +33,18 @@ function StudentList() {
                 filteredTags.map(tag => {
                         if(tag.id === student.id){
                             studentArr.push(student);
-                        }})
-                    });
+                        }
+                    return false;
+                    })
+                return false;
+            });
             return studentArr;
         }else{
-            students.map(student => studentArr.push(student))
+            students.map(student => {
+                studentArr.push(student)
+                return false;
+            }
+            )
             return studentArr;
         }
         
@@ -63,7 +70,8 @@ function StudentList() {
         // Compare two arrays and filter out common object(s)
         const result = nameResult.filter(obj1 => tagResult.some(obj2 => obj1.id === obj2.id));
         setSortedStudents(result);
-    }, [students, searchTerm])
+    } // eslint-disable-next-line
+    , [students, searchTerm]) 
 
 
     return (
@@ -83,7 +91,7 @@ function StudentList() {
                     tags={tags}
                     setTags={setTags}
                 />
-            ): <div>No Result Found</div>
+            ): <div style={{margin: "2rem"}}>No Results Found</div>
             }
         </div>
 
