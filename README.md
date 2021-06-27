@@ -3,6 +3,7 @@
 ### Built with
 
 - [React](https://reactjs.org/)
+- SASS
 
 ### Installation and Setup Instructions
 

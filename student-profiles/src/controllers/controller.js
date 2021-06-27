@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import App from '../App';
-import {getStudentProfiles} from '../api/studentsAPI';
+import { getStudentProfiles } from '../api/studentsAPI';
+import StudentList from '../components/StudentList';
 
-export default function controller () {
+function controller () {
     const [students, setStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchTag, setSearchTag] = useState("");
@@ -13,7 +13,8 @@ export default function controller () {
     // Handle Fetch students
     const handleGetAllStudents = async () => {
         const results = await getStudentProfiles();
-        setStudents(results);
+        setStudents(results.data.students);
+        console.log(students);
     }
 
     // Calculate student's average grade
@@ -84,12 +85,11 @@ export default function controller () {
     }
 
     useEffect(()=>{      
-        getStudentProfiles();
-     },[searchTerm, searchTag]);
+        handleGetAllStudents();
+     },[]);
 
      return (
-        <App 
-            handleGetAllStudents={handleGetAllStudents}
+        <StudentList 
             handleAverageGrade={handleAverageGrade}
             searchByName={searchByName}
             searchByTag={searchByTag}
@@ -104,3 +104,4 @@ export default function controller () {
         />
      )
 }
+export default controller;

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Grades({isActive, studentId, grades, }) {
+function Grades({isActive, studentId, grades}) {
     return (
         <>
             {isActive === studentId && 
