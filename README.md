@@ -1,4 +1,10 @@
-# Frontend Assessment - Student Profiles
+# Student Profiles
+
+### Features
+
+- Search for student by name or tag, or both
+- Add tag to a student
+- View student's infomation
 
 ### Built with
 
